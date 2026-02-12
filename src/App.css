@@ -1,0 +1,18 @@
+/* ✅ IMPORTANT: remove default spacing */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ✅ root should be full width */
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* optional: smooth fonts */
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f6fa;
+}

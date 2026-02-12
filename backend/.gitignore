@@ -1,0 +1,16 @@
+# Node
+node_modules/
+npm-debug.log*
+
+# Environment files
+.env
+.env.local
+
+# Vite
+dist/
+
+# Uploads (if storing images locally)
+uploads/
+
+# OS
+.DS_Store
