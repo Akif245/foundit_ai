@@ -11,7 +11,9 @@ export const apiRequest = async (endpoint, method = "GET", body, token) => {
     headers.Authorization = `Bearer ${token}`;
   }
 
-  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+  // const response = await fetch(`${API_BASE_URL}${endpoint}`, { akiffffffffffff
+  const response = await fetch(`${API}${endpoint}`, {
+
     method,
     headers,
     body: body ? JSON.stringify(body) : null,
