@@ -1,4 +1,6 @@
-const API_BASE_URL = "http://localhost:5000";
+// const API_BASE_URL = "http://localhost:5000";
+const API = "https://foundit-ai.onrender.com";
+
 
 export const apiRequest = async (endpoint, method = "GET", body, token) => {
   const headers = {
