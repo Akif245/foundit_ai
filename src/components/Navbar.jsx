@@ -71,6 +71,7 @@ import { Link, useNavigate } from "react-router-dom";
 export default function Navbar() {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
+  const isAdmin = user?.role === "admin";
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -123,6 +124,16 @@ export default function Navbar() {
             >
               Contact
             </Link>
+
+            {isAdmin && (
+              <Link
+                to="/admin/claims"
+                className="text-gray-300 px-4 py-2 rounded-lg transition duration-300
+                hover:text-white hover:bg-gray-800 hover:scale-105"
+              >
+                Admin Claims
+              </Link>
+            )}
           </>
         )}
       </div>

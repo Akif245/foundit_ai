@@ -1,0 +1,27 @@
+API consistency changes made for the LostAndFound project
+
+1. Changed the shared frontend API base URL from:
+https://foundit-ai.onrender.com
+to:
+http://localhost:5000
+
+2. Updated the shared API helper file:
+src/utils/api.js
+
+3. Added a reusable image URL helper so item images also use the same backend base URL.
+
+4. Updated these frontend files to stop using hardcoded backend URLs and use the shared API base instead:
+src/components/ItemCard.jsx
+src/pages/Dashboard.jsx
+src/pages/ReportItem.jsx
+src/pages/AdminClaims.jsx
+src/pages/ClaimRequest.jsx
+
+5. Improved the fetch error message in src/utils/api.js so connection failures now show:
+"Could not connect to the backend server"
+instead of the vague browser-level "Failed to fetch"
+
+What you need to run now:
+1. Start the backend from the backend folder with npm run dev
+2. Start the frontend with npm run dev
+3. Make sure the backend is available at http://localhost:5000

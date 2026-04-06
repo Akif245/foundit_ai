@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import AdminClaims from "./pages/AdminClaims";
 
 import Navbar from "./components/Navbar";
@@ -12,6 +12,20 @@ import ClaimRequest from "./pages/ClaimRequest";
 import Contact from "./pages/contact";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+
+function AdminRoute({ children }) {
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (user.role !== "admin") {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  return children;
+}
 
 export default function App() {
   return (
@@ -28,7 +42,14 @@ export default function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/admin/claims" element={<AdminClaims />} />
+            <Route
+              path="/admin/claims"
+              element={
+                <AdminRoute>
+                  <AdminClaims />
+                </AdminRoute>
+              }
+            />
 
           </Routes>
         </main>

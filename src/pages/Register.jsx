@@ -29,7 +29,15 @@ export default function Register() {
       );
 
       localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data));
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          _id: data._id,
+          name: data.name,
+          email: data.email,
+          role: data.role,
+        })
+      );
 
       alert("Registration successful");
       navigate("/dashboard");

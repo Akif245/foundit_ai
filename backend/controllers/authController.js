@@ -13,12 +13,13 @@ const registerUser = async (req, res) => {
     return res.status(400).json({ message: "User already exists" });
   }
 
-  const user = await User.create({ name, email, password });
+  const user = await User.create({ name, email, password, role: "user" });
 
   res.status(201).json({
     _id: user._id,
     name: user.name,
     email: user.email,
+    role: user.role,
     token: generateToken(user),
   });
 };
@@ -33,6 +34,7 @@ const loginUser = async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      role: user.role,
       token: generateToken(user),
     });
   }

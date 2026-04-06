@@ -102,6 +102,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../utils/api";
 
 export default function ClaimRequest() {
   const { id } = useParams(); // itemId
@@ -116,7 +117,7 @@ export default function ClaimRequest() {
 
   const fetchItem = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/items/${id}`);
+      const res = await axios.get(`${API_BASE_URL}/api/items/${id}`);
       setItem(res.data);
     } catch (err) {
       console.error(err);
@@ -132,7 +133,7 @@ export default function ClaimRequest() {
     e.preventDefault();
 
     try {
-      const res = await axios.post("http://localhost:5000/api/claims/create", {
+      const res = await axios.post(`${API_BASE_URL}/api/claims/create`, {
         itemId: id,
         claimerName,
         claimerPhone,

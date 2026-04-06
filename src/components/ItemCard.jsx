@@ -1,4 +1,5 @@
 import React from "react";
+import { getImageUrl } from "../utils/api";
 
 export default function ItemCard({ item }) {
   return (
@@ -6,7 +7,7 @@ export default function ItemCard({ item }) {
       {/* Item Image */}
       {item.image && (
         <img
-          src={`http://localhost:5000${item.image}`}
+          src={getImageUrl(item.image)}
           alt={item.name}
           className="w-full h-48 object-cover"
         />

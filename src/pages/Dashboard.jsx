@@ -157,7 +157,7 @@
 //   );
 // }
 import React, { useEffect, useState } from "react";
-import { apiRequest } from "../utils/api";
+import { apiRequest, getImageUrl } from "../utils/api";
 import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
@@ -197,7 +197,7 @@ export default function Dashboard() {
             >
               {item.image && (
                 <img
-                  src={`http://localhost:5000${item.image}`}
+                  src={getImageUrl(item.image)}
                   alt={item.name}
                   className="w-40 h-40 object-cover rounded"
                 />
@@ -235,4 +235,3 @@ export default function Dashboard() {
     </div>
   );
 }
-

@@ -1,17 +1,25 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Navigate } from "react-router-dom";
+import { API_BASE_URL } from "../utils/api";
 
 export default function AdminClaims() {
+  const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user"));
   const [claims, setClaims] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const fetchClaims = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/claims");
+      const res = await axios.get(`${API_BASE_URL}/api/claims`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setClaims(res.data);
     } catch (error) {
       console.error("Fetch claims error:", error.message);
-      alert("❌ Failed to load claims");
+      alert(error.response?.data?.message || "❌ Failed to load claims");
     } finally {
       setLoading(false);
     }
@@ -23,14 +31,30 @@ export default function AdminClaims() {
 
   const updateStatus = async (claimId, status) => {
     try {
-      await axios.put(`http://localhost:5000/api/claims/${claimId}`, { status });
+      await axios.put(
+        `${API_BASE_URL}/api/claims/${claimId}`,
+        { status },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       alert(`✅ Claim ${status}`);
       fetchClaims();
     } catch (error) {
       console.error("Update status error:", error.message);
-      alert("❌ Failed to update status");
+      alert(error.response?.data?.message || "❌ Failed to update status");
     }
   };
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (user.role !== "admin") {
+    return <Navigate to="/dashboard" replace />;
+  }
 
   return (
     <div className="p-6 max-w-6xl mx-auto">

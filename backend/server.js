@@ -6,9 +6,9 @@ const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const itemRoutes = require("./routes/itemRoutes");
 const claimRoutes = require("./routes/claimRoutes");
+const seedAdminUser = require("./utils/seedAdminUser");
 
 dotenv.config();
-connectDB();
 
 const app = express();
 
@@ -27,6 +27,14 @@ app.get("/", (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () =>
-  console.log(`Server running on port ${PORT}`)
-);
+
+const startServer = async () => {
+  await connectDB();
+  await seedAdminUser();
+
+  app.listen(PORT, () =>
+    console.log(`Server running on port ${PORT}`)
+  );
+};
+
+startServer();

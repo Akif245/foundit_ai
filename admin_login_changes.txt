@@ -1,0 +1,50 @@
+Admin login changes added to the LostAndFound project
+
+1. Added role support to users
+- Updated backend/models/User.js
+- New users now default to role = "user"
+- Supported roles are: user, admin
+
+2. Included role in auth responses
+- Updated backend/controllers/authController.js
+- Login and register now return the user's role
+
+3. Seeded one admin user from backend .env
+- Added backend/utils/seedAdminUser.js
+- Updated backend/server.js to run admin seeding on startup
+- Uses:
+  ADMIN_EMAIL
+  ADMIN_PASSWORD
+- If the admin user does not exist, it is created automatically
+- If it exists, its role is enforced as admin
+
+4. Protected admin backend APIs
+- Updated backend/middleware/authMiddleware.js
+- Updated backend/routes/claimRoutes.js
+- GET /api/claims now requires a valid admin token
+- PUT /api/claims/:id now requires a valid admin token
+- POST /api/claims/create remains public so claim requests still work
+
+5. Stored role in frontend localStorage
+- Updated src/pages/Login.jsx
+- Updated src/pages/Register.jsx
+- Admin users now redirect to /admin/claims after login
+- Normal users still go to /dashboard
+
+6. Hid or showed admin UI based on role
+- Updated src/components/Navbar.jsx
+- "Admin Claims" link now appears only for admin users
+
+7. Protected the admin page in the frontend
+- Updated src/App.jsx
+- Updated src/pages/AdminClaims.jsx
+- Non-logged-in users are redirected to /login
+- Logged-in non-admin users are redirected to /dashboard
+- Admin API calls now send the Bearer token
+
+How to log in as admin
+1. Make sure backend/.env contains ADMIN_EMAIL and ADMIN_PASSWORD
+2. Restart the backend so the admin user is created or synced
+3. Open the frontend login page
+4. Log in using ADMIN_EMAIL and ADMIN_PASSWORD
+5. You should be redirected to /admin/claims

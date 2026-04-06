@@ -676,6 +676,7 @@
 // }
 import React, { useState } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../utils/api";
 
 export default function ReportItem() {
   const [formData, setFormData] = useState({
@@ -739,7 +740,7 @@ export default function ReportItem() {
         data.append("image", formData.image);
       }
 
-      await axios.post("http://localhost:5000/api/items", data, {
+      await axios.post(`${API_BASE_URL}/api/items`, data, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 

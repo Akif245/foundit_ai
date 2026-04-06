@@ -1,6 +1,10 @@
-// const API_BASE_URL = "http://localhost:5000";
-const API = "https://foundit-ai.onrender.com";
+export const API_BASE_URL = "http://localhost:5000";
 
+export const getImageUrl = (imagePath = "") => {
+  if (!imagePath) return "";
+  if (imagePath.startsWith("http")) return imagePath;
+  return `${API_BASE_URL}${imagePath}`;
+};
 
 export const apiRequest = async (endpoint, method = "GET", body, token) => {
   const headers = {
@@ -11,15 +15,19 @@ export const apiRequest = async (endpoint, method = "GET", body, token) => {
     headers.Authorization = `Bearer ${token}`;
   }
 
-  // const response = await fetch(`${API_BASE_URL}${endpoint}`, { akiffffffffffff
-  const response = await fetch(`${API}${endpoint}`, {
+  let response;
 
-    method,
-    headers,
-    body: body ? JSON.stringify(body) : null,
-  });
+  try {
+    response = await fetch(`${API_BASE_URL}${endpoint}`, {
+      method,
+      headers,
+      body: body ? JSON.stringify(body) : null,
+    });
+  } catch (error) {
+    throw new Error("Could not connect to the backend server");
+  }
 
-  const data = await response.json();
+  const data = await response.json().catch(() => ({}));
 
   if (!response.ok) {
     throw new Error(data.message || "Something went wrong");

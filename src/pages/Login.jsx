@@ -36,13 +36,13 @@ export default function Login() {
           _id: data._id,
           name: data.name,
           email: data.email,
+          role: data.role,
         })
       );
 
       alert("Login successful");
 
-      // ✅ ALWAYS GO TO DASHBOARD
-      navigate("/dashboard");
+      navigate(data.role === "admin" ? "/admin/claims" : "/dashboard");
     } catch (error) {
       alert(error.message || "Login failed");
     } finally {

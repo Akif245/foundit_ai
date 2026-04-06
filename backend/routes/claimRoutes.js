@@ -96,6 +96,7 @@ const router = express.Router();
 
 const Claim = require("../models/Claim");
 const Item = require("../models/Item");
+const { protect, adminOnly } = require("../middleware/authMiddleware");
 
 // ✅ Create Claim (User)
 router.post("/create", async (req, res) => {
@@ -137,7 +138,7 @@ router.post("/create", async (req, res) => {
 });
 
 // ✅ Get All Claims (Admin)
-router.get("/", async (req, res) => {
+router.get("/", protect, adminOnly, async (req, res) => {
   try {
     const claims = await Claim.find()
       .populate("itemId")
@@ -151,7 +152,7 @@ router.get("/", async (req, res) => {
 });
 
 // ✅ Update Claim Status (Admin)
-router.put("/:id", async (req, res) => {
+router.put("/:id", protect, adminOnly, async (req, res) => {
   try {
     const { status } = req.body;
 
